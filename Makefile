@@ -1,11 +1,7 @@
 CAMLBUILD=ocamlbuild
-LIBS=$(WITHGRAPHICS)
-PACKAGE=-package
-WITHGRAPHICS=graphics
-WITHFLOAT=Float
-OUT=puissance4
+OUT=puissanceQuatre
 all:
-	$(CAMLBUILD) $(PACKAGE) $(WITHGRAPHICS) $(OUT).native
+	$(CAMLBUILD) -package graphics $(OUT).native
 
 run:
 	./${OUT}.native
