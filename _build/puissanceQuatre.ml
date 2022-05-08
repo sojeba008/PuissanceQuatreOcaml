@@ -46,7 +46,7 @@ struct
   (* val t2e : int -> int *)
   let n_colonnes = 7 
   let n_lignes = 6
-  let windows_h = 660
+  let windows_h = 665
   let windows_w = 670
   let rayon_cercle = 36 (*Rayon d'une case*)
   let marge_horizontale = 20 (* Marge entre les cases *)
@@ -148,8 +148,8 @@ de la marge horizontale et verticale du texte du bouton*)
     done;
     set_color white;
     fill_rect  0 (windows_w-108) (windows_h+20) 50;
-    ajouter_bouton retour_btn_pos_x retour_btn_pos_y retour_btn_pos_w retour_btn_pos_h "Retour" 27 15;
-    ajouter_bouton (windows_h-110) (windows_w-100) 100 40 "Recommencer" 13 15
+    ajouter_bouton retour_btn_pos_x retour_btn_pos_y retour_btn_pos_w retour_btn_pos_h "Retour" 27 15
+    (* ajouter_bouton (windows_h-110) (windows_w-100) 100 40 "Recommencer" 13 15 *)
 
     (*Cette fonction affiche le joueur à qui c'est le tour de jouer*)
     let notifier_a_qui_le_tour tour=
@@ -256,11 +256,12 @@ de la marge horizontale et verticale du texte du bouton*)
             false
         else
         ecouter_click () in
-        moveto  ((windows_w/2)-30) (windows_h-30-vv);
+
         
         Graphics.set_color white;
-        fill_rect  ((windows_w/2)-50) (windows_h-70) 150 30;
+        fill_rect  ((windows_w/2)-65) (windows_h-75) 150 17;
 
+        moveto  ((windows_w/2)-35) (windows_h-36-vv);
         Graphics.set_color couleurNoire;
         draw_string s;
 
@@ -275,26 +276,26 @@ de la marge horizontale et verticale du texte du bouton*)
   (* Three functions for these three cases *)
   (*Message affiché en cas de victoire*)
   let won () =
-    moveto  ((windows_w/2)-35) (windows_h-30);
+    moveto  ((windows_w/2)-38) (windows_h-51);
     Graphics.set_color couleurNoire;
-    draw_string "VICTOIRE !";
-    ignore (wait_click () ) 
+    draw_string "VICTOIRE !"
+    (* ignore (wait_click () )  *)
 
   
   (*Message affiché en cas de défaite*)
   let lost () =
-    moveto  ((windows_w/2)-65) (windows_h-30);
+    moveto  ((windows_w/2)-65) (windows_h-50);
     Graphics.set_color couleurNoire;
-    draw_string "VOUS AVEZ PERDU !";
-    ignore (wait_click () ) 
+    draw_string "VOUS AVEZ PERDU !"
+    (* ignore (wait_click () )  *)
 
 
   (*Message affiché en cas de match nul*)
   let draw () =
-    moveto  ((windows_w/2)-60) (windows_h-30);
+    moveto  ((windows_w/2)-60) (windows_h-50);
     Graphics.set_color couleurNoire;
-    draw_string "MATCH NUL !";
-    ignore (wait_click () ) 
+    draw_string "MATCH NUL !"
+    (* ignore (wait_click () )  *)
     (* () *)
 
 
@@ -392,11 +393,13 @@ module PuissanceQuatre_eval = struct
   exception Arg_invalid
   let lessI = -10000  (*Valeur prise et considérée comme moins linfini dans le cadre de l'évaluation du plateau. On procède ainsi, étant donné qu'il n'existe pas l'attribut infinity pour le type Integer comme pour le type Float*)
   let moreI = 10000 (*Valeur prise et considérée comme plus linfini dans le cadre de l'évaluation du plateau. On procède ainsi, étant donné qu'il n'existe pas l'attribut infinity pour le type Integer comme pour le type Float*)
-  let eval_four m l_dep c_dep delta_l delta_c =
+  let eval_four m l_dep c_dep delta_l delta_c b=
     let n = ref 0 and e = ref Empty
     and x = ref c_dep and y = ref l_dep
     in try
-      for i = 1 to 4 do
+      if b==false then
+      begin
+        for i = 1 to 4 do
         if !y<0 || !y>=row || !x<0 || !x>=col then raise Arg_invalid ;
         ( match m.(!y).(!x) with
           J1 -> if !e = J2 then raise Draw_Value ;
@@ -411,13 +414,34 @@ module PuissanceQuatre_eval = struct
           x := !x + delta_c ;
         y := !y + delta_l
       done ;
-      value.(!n) * (if !e=J1 then 1 else -1)
+      end;
+      if b==true then
+      begin
+        for i = 1 to 4 do
+          if !y<0 || !y>=row || !x<0 || !x>=col then raise Arg_invalid ;
+          ( match m.(!y).(!x) with
+            J2 -> if !e = J1 then raise Draw_Value ;
+            incr n ;
+            if !n = 4 then raise (Four moreI) ;
+            e := J2
+          | J1 -> if !e = J2 then raise Draw_Value ;
+            incr n ;
+            if !n = 4 then raise (Four lessI);
+            e := J1;
+          | Empty -> () ) ;
+            x := !x + delta_c ;
+          y := !y + delta_l
+        done ;
+      end;
+      if b!=true then value.(!n) * (if !e=J1 then 1 else -1)
+      else value.(!n) * (if !e=J2 then 1 else -1)
+  
     with
       Draw_Value | Arg_invalid -> 0
   
-  let eval_bloc m e cmin cmax lmin lmax dx dy =
+  let eval_bloc m e cmin cmax lmin lmax dx dy b=
     for c=cmin to cmax do for l=lmin to lmax do
-      e := !e + eval_four m l c dx dy
+      e := !e + eval_four m l c dx dy b
     done done
 
   (*
@@ -427,17 +451,17 @@ module PuissanceQuatre_eval = struct
   let evaluate b m =
     try let evaluation = ref 0
     in (* Evaluation des lignes *)
-    eval_bloc m evaluation 0 (row-1) 0 (col-4) 0 1 ;
+    eval_bloc m evaluation 0 (row-1) 0 (col-4) 0 1 b;
     (* Evaluation des colonnes *)
-    eval_bloc m evaluation 0 (col-1) 0 (row-4) 1 0 ;
+    eval_bloc m evaluation 0 (col-1) 0 (row-4) 1 0 b;
     (* Evaluation des diagonales venant de la première ligne (vers la droite)*)
-    eval_bloc m evaluation 0 (col-4) 0 (row-4) 1 1 ;
+    eval_bloc m evaluation 0 (col-4) 0 (row-4) 1 1 b;
     (* Evaluation des diagonales venant de la première ligne (vers la gauche) *)
-    eval_bloc m evaluation 1 (row-4) 0 (col-4) 1 1 ;
+    eval_bloc m evaluation 1 (row-4) 0 (col-4) 1 1 b;
     (* Evaluation des diagonales venant de la dernière ligne (vers la droite)*)
-    eval_bloc m evaluation 3 (col-1) 0 (row-4) 1 (-1) ;
+    eval_bloc m evaluation 3 (col-1) 0 (row-4) 1 (-1) b;
     (* Evaluation des diagonales venant de la dernière ligne (vers la gauche) *)
-    eval_bloc m evaluation 1 (row-4) 3 (col-1) 1 (-1) ;
+    eval_bloc m evaluation 1 (row-4) 3 (col-1) 1 (-1) b;
     !evaluation
     with Four v -> v
 
