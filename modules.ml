@@ -36,6 +36,8 @@ struct
 
   let playM player () =
     Disp.notifier_a_qui_le_tour 1;
+    if(player==true) then print_string "True"
+    else  print_string "False";
     let choice = Alpha.alphabeta !depth player !play_game in
     let old_game = !play_game
     in play_game := Rep.play player choice !play_game ;

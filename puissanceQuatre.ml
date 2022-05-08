@@ -60,7 +60,7 @@ struct
   let couleur_noire = Graphics.black (* trace *)
   (* let j1_couleur = Graphics.red  (* Couleur du joueur 1 *)
   let j2_couleur = Graphics.yellow Couleur du joueur 2 (IA) *)
-  let couleur_arriere_plan = Graphics.rgb 169 169 169 (* Game Background color *)
+  let couleur_arriere_plan = Graphics.rgb 0 0 169 (* Game Background color 169 169 169 *)
 
 
   let largeur_plateau = n_colonnes * largeur_totale_cercle + marge_horizontale (* Largeur du plateau *)
@@ -97,7 +97,7 @@ struct
 
   let difficle_btn_pos_x = 360
   let difficle_btn_pos_y = 400
-  let difficle_btn_pos_w = 70
+  let difficle_btn_pos_w = 78
   let difficle_btn_pos_h = 30
 
   let rejouer_oui_btn_pos_x = ((windows_w/2)-50)
@@ -312,19 +312,22 @@ de la marge horizontale et verticale du texte du bouton*)
       if (x>230 && x<295 && y>400 && y<430) then
         begin
           Graphics.clear_graph();
-          4;
+          print_string "Facile";
+          3
         end
       else
         if x>300 && x<365 && y>400 && y<430 then 
           begin
             Graphics.clear_graph();
-            6
+            print_string "Normal";
+            5
           end
       else
         if x>370 && x<435 && y>400 && y<430 then 
           begin
             Graphics.clear_graph();
-            8
+            print_string "Difficle";
+            9
           end
         
       else
@@ -393,12 +396,10 @@ module PuissanceQuatre_eval = struct
   exception Arg_invalid
   let lessI = -10000  (*Valeur prise et considérée comme moins linfini dans le cadre de l'évaluation du plateau. On procède ainsi, étant donné qu'il n'existe pas l'attribut infinity pour le type Integer comme pour le type Float*)
   let moreI = 10000 (*Valeur prise et considérée comme plus linfini dans le cadre de l'évaluation du plateau. On procède ainsi, étant donné qu'il n'existe pas l'attribut infinity pour le type Integer comme pour le type Float*)
-  let eval_four m l_dep c_dep delta_l delta_c b=
+  let eval_four m l_dep c_dep delta_l delta_c =
     let n = ref 0 and e = ref Empty
     and x = ref c_dep and y = ref l_dep
     in try
-      if b==false then
-      begin
         for i = 1 to 4 do
         if !y<0 || !y>=row || !x<0 || !x>=col then raise Arg_invalid ;
         ( match m.(!y).(!x) with
@@ -414,34 +415,15 @@ module PuissanceQuatre_eval = struct
           x := !x + delta_c ;
         y := !y + delta_l
       done ;
-      end;
-      if b==true then
-      begin
-        for i = 1 to 4 do
-          if !y<0 || !y>=row || !x<0 || !x>=col then raise Arg_invalid ;
-          ( match m.(!y).(!x) with
-            J2 -> if !e = J1 then raise Draw_Value ;
-            incr n ;
-            if !n = 4 then raise (Four moreI) ;
-            e := J2
-          | J1 -> if !e = J2 then raise Draw_Value ;
-            incr n ;
-            if !n = 4 then raise (Four lessI);
-            e := J1;
-          | Empty -> () ) ;
-            x := !x + delta_c ;
-          y := !y + delta_l
-        done ;
-      end;
-      if b!=true then value.(!n) * (if !e=J1 then 1 else -1)
-      else value.(!n) * (if !e=J2 then 1 else -1)
+     
+      value.(!n) * (if !e=J1 then 1 else -1)
   
     with
       Draw_Value | Arg_invalid -> 0
   
   let eval_bloc m e cmin cmax lmin lmax dx dy b=
     for c=cmin to cmax do for l=lmin to lmax do
-      e := !e + eval_four m l c dx dy b
+      e := !e + eval_four m l c dx dy
     done done
 
   (*
