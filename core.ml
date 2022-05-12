@@ -2,7 +2,6 @@
 L'architechture du squelette est inspirée de celle proposé par Emmanuel Chailloux, Pascal Manoury, and Bruno Pagano dans
 Developpement d’applications avec Objective Caml . O’Reilly France, 1998. http ://caml.inria.fr/pub/docs/oreilly-book/.
 *)
-
 module FSquelette
   (Rep : Types.REPRESENTATION)
   (Disp : Types.DISPLAY with type game = Rep.game and type move = Rep.move)
@@ -62,7 +61,6 @@ struct
   | false, true -> playM true, playH false;;
 
 end ;;
-
 
 module FMain (P : Types.SQUELETTE) =
 struct

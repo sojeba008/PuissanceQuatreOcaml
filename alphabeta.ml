@@ -1,5 +1,5 @@
 (*
-Ce module gère l'algorithme AlphaBeta.
+Ce module gère l'algorithme minimax avec Elagage AlphaBeta.
 IMPPORTANT: Ce module est issue du livre Emmanuel Chailloux, Pascal Manoury, and Bruno Pagano.
 Developpement d’applications avec Objective Caml . O’Reilly France, 1998. http ://caml.inria.fr/pub/docs/oreilly-book/.
 (Référence imposée dans le sujet du projet)

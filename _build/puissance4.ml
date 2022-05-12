@@ -459,8 +459,8 @@ module PuissanceQuatre_eval = struct
     else if legal_moves player m = [] then D else C
 end ;;
 
-module PuissanceQuatre_squelette = Modules.FSquelette (PuissanceQuatre_representation) (PuissanceQuatre_graph) (PuissanceQuatre_eval) (Alphabeta.FAlphabeta (PuissanceQuatre_representation) (PuissanceQuatre_eval)) ;;
+module PuissanceQuatre_squelette = Core.FSquelette (PuissanceQuatre_representation) (PuissanceQuatre_graph) (PuissanceQuatre_eval) (Alphabeta.FAlphabeta (PuissanceQuatre_representation) (PuissanceQuatre_eval)) ;;
 
-module PuissanceQuatre_main = Modules.FMain(PuissanceQuatre_squelette) ;;
+module PuissanceQuatre_main = Core.FMain(PuissanceQuatre_squelette) ;;
 
 PuissanceQuatre_main.main() ;;

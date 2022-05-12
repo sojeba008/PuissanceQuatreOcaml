@@ -28,22 +28,13 @@ module PuissanceQuatre_representation = struct
 end ;;
 
 
-
+(* Module charger de gérer l'interface graphique. *)
 module PuissanceQuatre_graph = 
 struct
   open PuissanceQuatre_representation
   type game = PuissanceQuatre_representation.game
   type move = PuissanceQuatre_representation.move
-  let r = 36 (* color of piece *)
-  let ec = 20 (* distance between pieces *)
-  let dec = 30 (* center of first piece *)
 
-  let htexte = 25 (* where to place text *)
-
-
-  let wb = 25 (* width of the buttons *)
-  let hb = 16 (* height of the buttons *)
-  (* val t2e : int -> int *)
   let n_colonnes = 7 
   let n_lignes = 6
   let windows_h = 665
@@ -97,7 +88,7 @@ struct
 
   let difficle_btn_pos_x = 360
   let difficle_btn_pos_y = 400
-  let difficle_btn_pos_w = 75
+  let difficle_btn_pos_w = 78
   let difficle_btn_pos_h = 30
 
   let rejouer_oui_btn_pos_x = ((windows_w/2)-50)
@@ -167,7 +158,7 @@ de la marge horizontale et verticale du texte du bouton*)
     Graphics.set_color couleur;
     let x = 60 + (c-1)*largeur_totale_cercle in 
     let y = 55 + (l-1)*largeur_totale_cercle in 
-    Graphics.fill_circle x y (r-5)
+    Graphics.fill_circle x y (rayon_cercle-5)
 
 
   (* Cette fonction permet d'annuler un mouvement (revenir en arriere) ou supprimer la dernière piece posé sur une colonne *)
@@ -270,10 +261,6 @@ de la marge horizontale et verticale du texte du bouton*)
         ajouter_bouton rejouer_non_btn_pos_x rejouer_non_btn_pos_y rejouer_non_btn_pos_w rejouer_non_btn_pos_h "Non" 7 8;
         ecouter_click()
 
-  (* val won : unit -> unit *)
-  (* val lost : unit -> unit *)
-  (* val draw : unit -> unit *)
-  (* Three functions for these three cases *)
   (*Message affiché en cas de victoire*)
   let won () =
     moveto  ((windows_w/2)-38) (windows_h-51);
@@ -381,16 +368,17 @@ end ;;
 
 (*
 Ce module permet gérer tout ce qui est relatif à l'état du jeu.
-Il permet entre autre d'évaluer l'état du plateua, c'est-à-dire associer une note(ou score) au plateau afin de déterminer si un choix est plus favorable que l'autre.
-IMPPORTANT: Ce module est inspiré par le module d'évaluation proposé par Emmanuel Chailloux, Pascal Manoury, and Bruno Pagano dans
+Il permet entre autre d'évaluer l'état du plateau, c'est-à-dire associer une note(ou score) au plateau afin de déterminer si un choix est plus favorable que l'autre.
+IMPORTANT: Ce module est inspiré par le module d'évaluation proposé par Emmanuel Chailloux, Pascal Manoury, and Bruno Pagano dans
 Developpement d’applications avec Objective Caml . O’Reilly France, 1998. http ://caml.inria.fr/pub/docs/oreilly-book/.
 (Référence imposée dans le sujet du projet) 
+
 *)
 module PuissanceQuatre_eval = struct
   open PuissanceQuatre_representation 
   type game = PuissanceQuatre_representation.game
   let value =
-    Array.of_list [0; 2; 10; 50]
+    Array.of_list [0; 2; 10; 50] (* Le tableau velue donne la valeur d'un bloc contenant entre zero et quatre piece d'un même joueur. L'exception Four est déclenchée quand 4 pieces sont alignées ou Draw_Value quand il y a match nul. *)
   exception Four of int
   exception Draw_Value
   exception Arg_invalid
@@ -468,8 +456,6 @@ module PuissanceQuatre_eval = struct
     else if legal_moves player m = [] then D else C
 end ;;
 
-module PuissanceQuatre_squelette = Modules.FSquelette (PuissanceQuatre_representation) (PuissanceQuatre_graph) (PuissanceQuatre_eval) (Alphabeta.FAlphabeta (PuissanceQuatre_representation) (PuissanceQuatre_eval)) ;;
-
-module PuissanceQuatre_main = Modules.FMain(PuissanceQuatre_squelette) ;;
-
+module PuissanceQuatre_squelette = Core.FSquelette (PuissanceQuatre_representation) (PuissanceQuatre_graph) (PuissanceQuatre_eval) (Alphabeta.FAlphabeta (PuissanceQuatre_representation) (PuissanceQuatre_eval)) ;;
+module PuissanceQuatre_main = Core.FMain(PuissanceQuatre_squelette) ;;
 PuissanceQuatre_main.main() ;;

@@ -1,4 +1,4 @@
-(*Dans ce fichier, on rassemble l'ensemble des déclaration des types que nous avons utilisés*)
+(*Dans ce fichier, on rassemble l'ensemble des signatures des interfaces que nous avons utilisés *)
 
 module type REPRESENTATION =
 sig
