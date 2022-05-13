@@ -1,0 +1,52 @@
+### Starting build.
+# Target: puissanceQuatre.ml.depends, tags: { extension:ml, file:puissanceQuatre.ml, ocaml, ocamldep, quiet }
+ C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/bin/ocamldep.opt -modules puissanceQuatre.ml > puissanceQuatre.ml.depends
+# Target: alphabeta.ml.depends, tags: { extension:ml, file:alphabeta.ml, ocaml, ocamldep, quiet }
+ C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/bin/ocamldep.opt -modules alphabeta.ml > alphabeta.ml.depends
+# Target: types.ml.depends, tags: { extension:ml, file:types.ml, ocaml, ocamldep, quiet }
+ C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/bin/ocamldep.opt -modules types.ml > types.ml.depends
+# Target: types.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:types.cmo, file:types.ml, implem, ocaml, quiet }
+ C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/bin/ocamlc.opt -c -I C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/lib/graphics -o types.cmo types.ml
+# Target: core.ml.depends, tags: { extension:ml, file:core.ml, ocaml, ocamldep, quiet }
+ C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/bin/ocamldep.opt -modules core.ml > core.ml.depends
+# Target: alphabeta.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:alphabeta.cmo, file:alphabeta.ml, implem, ocaml, quiet }
+ C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/bin/ocamlc.opt -c -I C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/lib/graphics -o alphabeta.cmo alphabeta.ml
+# Target: core.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:core.cmo, file:core.ml, implem, ocaml, quiet }
+ C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/bin/ocamlc.opt -c -I C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/lib/graphics -o core.cmo core.ml
++  C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/bin/ocamlc.opt -c -I C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/lib/graphics -o core.cmo core.ml
+File "core.ml", line 53, characters 4-15:
+53 |     Random.init ;
+         ^^^^^^^^^^^
+Warning 10 [non-unit-statement]: this expression should have type unit.
+File "core.ml", lines 59-61, characters 4-42:
+59 | ....match (a,b) with
+60 |     true,false -> playH true, playM false
+61 |   | false, true -> playM true, playH false..
+Warning 8 [partial-match]: this pattern-matching is not exhaustive.
+Here is an example of a case that is not matched:
+(true, true)
+# Target: puissanceQuatre.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:puissanceQuatre.cmo, file:puissanceQuatre.ml, implem, ocaml, quiet }
+ C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/bin/ocamlc.opt -c -I C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/lib/graphics -o puissanceQuatre.cmo puissanceQuatre.ml
+# Target: types.cmx, tags: { compile, extension:cmx, extension:ml, file:types.cmx, file:types.ml, implem, native, ocaml, quiet }
+ C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/bin/ocamlopt.opt -c -I C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/lib/graphics -o types.cmx types.ml
+# Target: alphabeta.cmx, tags: { compile, extension:cmx, extension:ml, file:alphabeta.cmx, file:alphabeta.ml, implem, native, ocaml, quiet }
+ C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/bin/ocamlopt.opt -c -I C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/lib/graphics -o alphabeta.cmx alphabeta.ml
+# Target: core.cmx, tags: { compile, extension:cmx, extension:ml, file:core.cmx, file:core.ml, implem, native, ocaml, quiet }
+ C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/bin/ocamlopt.opt -c -I C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/lib/graphics -o core.cmx core.ml
++  C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/bin/ocamlopt.opt -c -I C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/lib/graphics -o core.cmx core.ml
+File "core.ml", line 53, characters 4-15:
+53 |     Random.init ;
+         ^^^^^^^^^^^
+Warning 10 [non-unit-statement]: this expression should have type unit.
+File "core.ml", lines 59-61, characters 4-42:
+59 | ....match (a,b) with
+60 |     true,false -> playH true, playM false
+61 |   | false, true -> playM true, playH false..
+Warning 8 [partial-match]: this pattern-matching is not exhaustive.
+Here is an example of a case that is not matched:
+(true, true)
+# Target: puissanceQuatre.cmx, tags: { compile, extension:cmx, extension:ml, file:puissanceQuatre.cmx, file:puissanceQuatre.ml, implem, native, ocaml, quiet }
+ C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/bin/ocamlopt.opt -c -I C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/lib/graphics -o puissanceQuatre.cmx puissanceQuatre.ml
+# Target: puissanceQuatre.native, tags: { dont_link_with, extension:native, file:puissanceQuatre.native, link, native, ocaml, program, quiet }
+ C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/bin/ocamlopt.opt -I C:/OCaml64/home/sojeb/.opam/4.13.1+mingw64c/lib/graphics 'C:\OCaml64\home\sojeb\.opam\4.13.1+mingw64c\lib\graphics\graphics.cmxa' types.cmx alphabeta.cmx core.cmx puissanceQuatre.cmx -o puissanceQuatre.native
+# Compilation successful.
