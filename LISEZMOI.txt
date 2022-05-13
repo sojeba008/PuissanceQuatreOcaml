@@ -1,0 +1,4 @@
+Etape d'exécution du programme
+- S'assurer d'avoir \textbf{ocaml} installé sur la machine;
+- se positionner dans le répertoire du programme et exécuter la commande \textbf{make} afin de compiler le programme avec les différents fichiers
+- lancer la commande \textbf{make run} afin d'exécuter le programme.

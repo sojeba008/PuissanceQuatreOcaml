@@ -91,6 +91,11 @@ struct
   let difficle_btn_pos_w = 78
   let difficle_btn_pos_h = 30
 
+  (* let legendaire_btn_pos_x = 430
+  let legendaire_btn_pos_y = 400
+  let legendaire_btn_pos_w = 80
+  let legendaire_btn_pos_h = 30 *)
+
   let rejouer_oui_btn_pos_x = ((windows_w/2)-50)
   let rejouer_oui_btn_pos_y = (windows_h-70-vv) 
   let rejouer_oui_btn_pos_w = 35 
@@ -168,9 +173,8 @@ de la marge horizontale et verticale du texte du bouton*)
       decr l
     done;
     !l
-  (* val conv : Graphics.status -> int *)
-  (* convert the region where player has clicked in controlling the game *)
-  let conv st =
+  (* convertirClickEnNumColonneert the region where player has clicked in controlling the game *)
+  let convertirClickEnNumColonne st =
     let x = (st.Graphics.mouse_x) / largeur_totale_cercle + 1 in
     print_int x;
     print_string " ";
@@ -183,14 +187,14 @@ de la marge horizontale et verticale du texte du bouton*)
     (* 
     Ici on demande la possibilité à l'utilisateur de faire un choix de jeu en cliquant. Tant qu'il ne clique pas sur un choix possible, on lui laisse la possbilité de faire un nouveau choix 
     L'utilisateur a la possbilité de quitter la partie en cliquant sur le bouton Quitter.
-    Lorsque l'utilisateur clique sur un point de la fenetre, on récupère les coordonnées et on recupère le numéro de la colonne choisie en utilisant la fonction conv
+    Lorsque l'utilisateur clique sur un point de la fenetre, on récupère les coordonnées et on recupère le numéro de la colonne choisie en utilisant la fonction convertirClickEnNumColonne
     *)
     let rec choice player game =
       let c = ref 0 in
       let valid_h = ref false in 
       while not ( List.mem !c (legal_moves player game) ) && !valid_h==false do
         let st = wait_click() in
-        c := conv ( st);
+        c := convertirClickEnNumColonne ( st);
         if st.Graphics.mouse_y < 560 then
           valid_h:=true;
         let r_x = retour_btn_pos_x in
