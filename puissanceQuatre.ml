@@ -304,21 +304,21 @@ de la marge horizontale et verticale du texte du bouton*)
         begin
           Graphics.clear_graph();
           print_string "Facile";
-          3
+          2
         end
       else
         if x>300 && x<365 && y>400 && y<430 then 
           begin
             Graphics.clear_graph();
             print_string "Normal";
-            5
+            6
           end
       else
         if x>370 && x<435 && y>400 && y<430 then 
           begin
             Graphics.clear_graph();
             print_string "Difficle";
-            9
+            8
           end
         
       else
